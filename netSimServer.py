@@ -17,10 +17,20 @@ def listenForData(connection):
 
                     type = recieved['type']
                     if(type == "DATA"):
+                        if "type" in recieved["data"]:
+                            if recieved["data"]["type"] == "DHCP_REQUEST":
+                                for aconnection in ports.values():
+                                    if aconnection != connection:
+                                        aconnection.send(recievedStr)
                         port = recieved["port"]
                         try:
                             print (ports)
-                            ports[port].send(recievedStr)
+                            if port != "-1":
+                                ports[port].send(recievedStr)
+                            else:
+                                for aconnection in ports.values():
+                                    if aconnection != connection:
+                                       aconnection.send(recievedStr)
                         except KeyError:
                             print("Error: packet sent to non-existing port %s"%port)
                     elif(type == "REQUEST"):
@@ -37,7 +47,10 @@ class Connection(object):
 
     def send(self, data):
         print("Sending %s"%data)
-        self.sock.send(data)
+        try:
+            self.sock.send(data)
+        except Exception as e:
+            print("Exception while sending: %s"%e)
 
     def addPort(self):
         global ports

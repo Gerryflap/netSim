@@ -2,7 +2,7 @@ __author__ = 'Gerryflap'
 import netSimClient as nsc
 
 #Connect to the server running the simulation
-connection = nsc.connect("127.0.0.1", 1337)
+connection = nsc.connect("www.gerben-meijer.nl", 1337)
 
 
 #Define a class that will be connected to the virtual network
@@ -18,7 +18,7 @@ class Computer(object):
         #Send a dictionary via our PortConnection
         #Whatever is in the dictionary is up to you.
         print("Sending text")
-        self.portConnection.send(0, {"text": "Zwekker"})
+        self.portConnection.send(1, {"text": "Zwekker"})
         print(self.port)
 
     def onRecv(self, data):
