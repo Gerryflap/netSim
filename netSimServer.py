@@ -1,7 +1,9 @@
 __author__ = 'Gerryflap'
 import socket
-import threading
-import _thread
+try:
+    import _thread
+except Exception:
+    import thread as _thread
 import json
 
 def listenForData(connection):

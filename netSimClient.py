@@ -2,7 +2,10 @@ import json
 
 __author__ = 'Gerryflap'
 import socket
-import _thread
+try:
+    import _thread
+except Exception:
+    import thread as _thread
 import time
 
 def connect(ip, port):
